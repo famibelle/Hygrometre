@@ -36,6 +36,9 @@ void setup(){ // Initialisation
 void loop() { //boucle principale
     hsol = analogRead(PinAnalogiqueHumidite); // Lit la tension analogique
     secheresse = digitalRead(PinNumeriqueHumidite); 
+    luminosite = (1024 - hsol)/4;
+    analogWrite(PinLed, luminosite);
+
     Serial.print("Humidite Sol");
     Serial.print("\t");
     Serial.print(hsol); // afficher la mesure
@@ -43,20 +46,22 @@ void loop() { //boucle principale
     Serial.print("Secheresse");
     Serial.print("\t");
     Serial.print(secheresse);  //0 ou 1 si le seuil est d�pass�
+    Serial.print("\t");
+    Serial.print("Luminosite");
+    Serial.print("\t");
+    Serial.print(luminosite);
     Serial.print("\n");
     if (secheresse==1) 
     {
       //digitalWrite(PinLed, HIGH);   // LED allumée
-      luminosite = (1024 - hsol)/4;
-      analogWrite(PinLed, luminosite);
       digitalWrite(PinLEDStrip, HIGH);
     }
     else {
-      digitalWrite(PinLed, LOW);   // LED off
+      //digitalWrite(PinLed, LOW);   // LED off
       digitalWrite(PinLEDStrip, LOW);
     }
 
-    analogWrite(PinLEDStrip, hsol);
+    //analogWrite(PinLEDStrip, hsol);
 
     // Conversion du int en tableau de chars 
     itoa(hsol,Message,10);  // 10 car décimal
