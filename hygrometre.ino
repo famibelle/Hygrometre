@@ -22,7 +22,7 @@ int PinLEDStrip=9;
 
 int hsol;  //Humidite su sol, mesure analogique
 int secheresse;  //0 ou 1 si seuil atteint
-
+int luminosite; //niveau de luminosité de la LED
 void setup(){ // Initialisation 
     Serial.begin(9600);  //Connection s�rie � 9600 baud
     pinMode(PinAnalogiqueHumidite, INPUT);       //pin A0 en entr�e analogique
@@ -46,7 +46,9 @@ void loop() { //boucle principale
     Serial.print("\n");
     if (secheresse==1) 
     {
-      digitalWrite(PinLed, HIGH);   // LED allum�e
+      //digitalWrite(PinLed, HIGH);   // LED allumée
+      luminosite = (1024 - hsol)/4;
+      analogWrite(PinLed, luminosite);
       digitalWrite(PinLEDStrip, HIGH);
     }
     else {
